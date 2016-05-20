@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'wordx'
 
 describe Wordx do
   it 'has a version number' do

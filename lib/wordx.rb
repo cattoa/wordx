@@ -1,8 +1,10 @@
 require "wordx/version"
-require "wordx/content_types"
+require "wordx/content_type"
+
 
 
 module Wordx
-  Wordx::ContentTypes::Content.new().create()
+  wordx = ContentType::Content.new()
+  wordx.create()
 
 end
