@@ -31,5 +31,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.2"
   spec.add_development_dependency "pry", "~> 0.10.3"
-  spec.add_development_dependency "fileutils"
+  spec.add_development_dependency "factory_girl_rails"
+  spec.add_development_dependency "capybara"
+  spec.add_development_dependency "listen","~> 3.0"
+  spec.add_development_dependency "guard-rspec"
+  spec.add_dependency "fileutils"
 end
