@@ -35,7 +35,7 @@ module DocProp
       end
     end
 
-    def create_core()
+    def create_core(user = nil, description = nil, language = nil, revision = nil, subject = nil, title = nil)
 
       ns = {
         "xmlns:cp" => "http://schemas.openxmlformats.org/package/2006/metadata/core-properties",
@@ -46,17 +46,24 @@ module DocProp
         "xsi:type"=>"dcterms:W3CDTF"
       }
 
+      user = "Rail wordx/#{Wordx::VERSION}$Linux_X86_64" if user.nil?
+      description = "Documented created by Rail wordx/#{Wordx::VERSION}$Linux_X86_64"
+      language = "US-EN" if language.nil?
+      revision = "1.0" if revision.nil?
+      subject = "" if subject.nil?
+      title = "" if title.nil?
+
       builder = Nokogiri::XML::Builder.new do |xml|
         xml[:cp].coreProperties(ns) {
-          xml[:dcterms].created(xs) ( Time.now.strftime("%Y-%m-%dT%H:%M:%S"))
-          xml[:dc].creator
-          xml[:dc].description
-          xml[:dc].language
-          xml[:cp].lastModifiedBy
-          xml[:dcterms].modified Time.now.strftime("%Y-%m-%dT%H:%M:%S")
-          xml[:cp].revision
-          xml[:dc].subject
-          xml[:dc].title
+          xml[:dcterms].created Time.now.strftime("%Y-%m-%dT%H:%M:%S"), xs
+          xml[:dc].creator user
+          xml[:dc].description description
+          xml[:dc].language language
+          xml[:cp].lastModifiedBy user
+          xml[:dcterms].modified Time.now.strftime("%Y-%m-%dT%H:%M:%S"),xs
+          xml[:cp].revision revision
+          xml[:dc].subject subject
+          xml[:dc].title title
         }
       end
 
