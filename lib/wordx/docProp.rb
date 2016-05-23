@@ -3,6 +3,9 @@ require 'nokogiri'
 module DocProp
   class Content
     def initialize(path = nil)
+
+      path_rels = File.dirname(__FILE__) + "/tempdoc/rels_/" if path.nil?
+      FileUtils::mkdir_p path_rels unless File.exists?(path_rels)
       path = File.dirname(__FILE__) + "/tempdoc/docProps/" if path.nil?
       FileUtils::mkdir_p path unless File.exists?(path)
       @docProps_path = path
