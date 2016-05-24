@@ -14,4 +14,6 @@ module Wordx
   word = Word::Content.new()
   word.create_font_table()
   word.create_rels()
+  word.create_settings()
+  word.create_document()
 end

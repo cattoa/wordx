@@ -66,5 +66,72 @@ module Word
       end
 
     end
+
+    def create_settings(fonts = nil)
+
+      ns = {
+        "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+      }
+
+      builder = Nokogiri::XML::Builder.new do |xml|
+        xml[:w].settings(ns) {
+          xml[:w].zoom "w:percent"=> "100"
+          xml[:w].defaultTabStop "w:val"=>"700"
+          xml[:w].compat
+          xml[:w].themeFontLang "w:val"=> "", "w:eastAsia" => "", "w:bidi"=> ""
+        }
+      end
+
+      word_path = @word_path + "settings.xml"
+      File.delete(word_path) if File.exists?(word_path)
+      File.open(word_path, "w+") do |fw|
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>',''))
+      end
+
+    end
+
+    def create_document(doc = nil)
+
+      ns = {
+        "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+        "xmlns:mc"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+      }
+      if doc.nil?
+        doc = [{:style=>"Heading1",:text=>"Heading 1 Text",:before=>"240",:after=>"120"}]
+        doc << {:style=>"Heading2",:text=>"Heading 2 Text"}
+        doc << {:style=>"Heading3",:text=>"Heading 3 Text"}
+        doc << {:style=>"Heading",:text=>"Heading Text"}
+        doc << {:style=>"Normal",:text=>"Normal Texy"}
+      end
+
+
+      builder = Nokogiri::XML::Builder.new do |xml|
+        xml[:w].document(ns,"mc:Ignorable"=>"w14 wp14") {
+          doc.each do |doc_param|
+            xml[:w].body {
+              xml[:w].p{
+                xml[:w].pPr {
+                  xml[:w].pStyle("w:val"=>doc_param[:style]) unless doc_param[:style].nil?
+                  spacing_detail = [{"w:before"=>doc_param[:before]}] unless doc_param[:before].nil?
+                  spacing_detail << {"w:after"=>doc_param[:after]} unless doc_param[:after].nil?
+                  xml[:w].spacing (spacing_detail)
+                  xml[:w].rPr
+                }
+                xml[:w].r{
+                  xml[:w].rPr
+                  xml[:w].t (doc_param[:text]) unless doc_param[:text].nil?
+                }
+              }
+            }
+          end
+        }
+      end
+      doc_path = @word_path + "document.xml"
+      File.delete(doc_path) if File.exists?(doc_path)
+      File.open(doc_path, "w+") do |fw|
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>',''))
+      end
+    end
+
   end
 end

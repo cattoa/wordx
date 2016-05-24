@@ -1,0 +1,68 @@
+
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/wordprocessingml/2006/main" mc:Ignorable="w14 wp14">
+  <w:body>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing>[{"w:before"=&gt;"240"}, {"w:after"=&gt;"120"}]</w:spacing>
+        <w:rPr/>
+      </w:pPr>
+      <w:r>
+        <w:rPr/>
+        <w:t>Heading 1 Text</w:t>
+      </w:r>
+    </w:p>
+  </w:body>
+  <w:body>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing/>
+        <w:rPr/>
+      </w:pPr>
+      <w:r>
+        <w:rPr/>
+        <w:t>Heading 2 Text</w:t>
+      </w:r>
+    </w:p>
+  </w:body>
+  <w:body>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading3"/>
+        <w:spacing/>
+        <w:rPr/>
+      </w:pPr>
+      <w:r>
+        <w:rPr/>
+        <w:t>Heading 3 Text</w:t>
+      </w:r>
+    </w:p>
+  </w:body>
+  <w:body>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading"/>
+        <w:spacing/>
+        <w:rPr/>
+      </w:pPr>
+      <w:r>
+        <w:rPr/>
+        <w:t>Heading Text</w:t>
+      </w:r>
+    </w:p>
+  </w:body>
+  <w:body>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Normal"/>
+        <w:spacing/>
+        <w:rPr/>
+      </w:pPr>
+      <w:r>
+        <w:rPr/>
+        <w:t>Normal Texy</w:t>
+      </w:r>
+    </w:p>
+  </w:body>
+</w:document>
