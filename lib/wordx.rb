@@ -1,6 +1,7 @@
 require "wordx/version"
 require "wordx/content_type"
 require "wordx/docProp"
+require "wordx/word"
 
 
 
@@ -10,5 +11,6 @@ module Wordx
   doc_props_app = DocProp::Content.new()
   doc_props_app.create_app()
   doc_props_app.create_core()
-
+  word = Word::Content.new()
+  word.create_font_table()
 end
