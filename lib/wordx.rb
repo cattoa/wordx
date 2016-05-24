@@ -13,4 +13,5 @@ module Wordx
   doc_props_app.create_core()
   word = Word::Content.new()
   word.create_font_table()
+  word.create_rels()
 end

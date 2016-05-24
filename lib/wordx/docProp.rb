@@ -34,7 +34,7 @@ module DocProp
       file_path = @docProps_path + "app.xml"
       File.delete(file_path) if File.exists?(file_path)
       File.open(file_path, "w+") do |fw|
-        fw.write(builder.to_xml)
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>',''))
       end
     end
 
@@ -73,7 +73,7 @@ module DocProp
       file_path = @docProps_path + "core.xml"
       File.delete(file_path) if File.exists?(file_path)
       File.open(file_path, "w+") do |fw|
-        fw.write(builder.to_xml)
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>',''))
       end
     end
   end

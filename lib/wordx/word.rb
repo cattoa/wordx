@@ -4,8 +4,11 @@ module Word
   class Content
     def initialize(path = nil)
       path = File.dirname(__FILE__) + "/tempdoc/word/" if path.nil?
+      path_rels = path + "/_rels/"
       FileUtils::mkdir_p path unless File.exists?(path)
       @word_path = path
+      FileUtils::mkdir_p path_rels unless File.exists?(path_rels)
+      @word_rels_path = path_rels
     end
 
     def create_font_table(fonts = nil)
@@ -25,7 +28,6 @@ module Word
       builder = Nokogiri::XML::Builder.new do |xml|
         xml[:w].fonts(ns) {
           fonts.each do |font_array|
-            puts font_array
               fn = {
                 "w:name" =>font_array[:name]
               }
@@ -41,8 +43,28 @@ module Word
       word_path = @word_path + "fontTable.xml"
       File.delete(word_path) if File.exists?(word_path)
       File.open(word_path, "w+") do |fw|
-        fw.write(builder.to_xml)
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>',''))
       end
+    end
+
+    def create_rels(fonts = nil)
+
+
+      builder = Nokogiri::XML::Builder.new do |xml|
+        xml.Relationships {
+          xml.Relationship "Id"=>"rId1", "Type"=>"http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles", "Target"=>"styles.xml"
+          xml.Relationship "Id"=>"rId2", "Type"=>"http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering", "Target"=>"numbering.xml"
+          xml.Relationship "Id"=>"rId3", "Type"=>"http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable", "Target"=>"fontTable.xml"
+          xml.Relationship "Id"=>"rId4", "Type"=>"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings", "Target"=>"settings.xml"
+        }
+      end
+
+      word_rels_path = @word_rels_path + "document.xml.rels"
+      File.delete(word_rels_path) if File.exists?(word_rels_path)
+      File.open(word_rels_path, "w+") do |fw|
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>',''))
+      end
+
     end
   end
 end
