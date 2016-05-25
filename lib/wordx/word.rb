@@ -153,9 +153,10 @@ module Word
           xml[:w].docDefaults{
             xml[:w].rPrDefault {
               xml[:w].rPr {
-                xml[:w].rFonts
-                xml[:w].szCs
-                xml[:w].lang
+                xml[:w].rFonts "w:ascii"=>"Liberation Serif" "w:hAnsi"=>"Liberation Serif" "w:eastAsia"=>"Noto Sans CJK SC Regular" "w:cs"=>"FreeSans"
+                xml[:w].sz "w:val"=>"24"
+                xml[:w].szCs "w:val"=>"24"
+                xml[:w].lang "w:val"=>"en-ZA" "w:eastAsia"=>"zh-CN" "w:bidi"=>"hi-IN"
               }
             }
             xml[:w].pPrDefault {
