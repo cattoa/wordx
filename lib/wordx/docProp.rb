@@ -4,7 +4,7 @@ module DocProp
   class Content
     def initialize(path = nil)
 
-      path_rels = File.dirname(__FILE__) + "/tempdoc/rels_/" if path.nil?
+      path_rels = File.dirname(__FILE__) + "/tempdoc/_rels/" if path.nil?
       FileUtils::mkdir_p path_rels unless File.exists?(path_rels)
       path = File.dirname(__FILE__) + "/tempdoc/docProps/" if path.nil?
       FileUtils::mkdir_p path unless File.exists?(path)
@@ -17,9 +17,12 @@ module DocProp
       characters = 1 if characters.nil?
       characters_with_spaces = 1 if characters_with_spaces.nil?
       paragraphs = 1 if paragraphs.nil?
+      ns = {
+        "xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instance"
+      }
 
       builder = Nokogiri::XML::Builder.new do |xml|
-        xml.Properties {
+        xml.Properties(ns) {
           xml.Template{}
           xml.TotalTime "4"
           xml.Application "Rail wordx/#{Wordx::VERSION}$Linux_X86_64"
@@ -34,7 +37,7 @@ module DocProp
       file_path = @docProps_path + "app.xml"
       File.delete(file_path) if File.exists?(file_path)
       File.open(file_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>',''))
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
       end
     end
 
@@ -43,7 +46,9 @@ module DocProp
       ns = {
         "xmlns:cp" => "http://schemas.openxmlformats.org/package/2006/metadata/core-properties",
         "xmlns:dc" => "http://purl.org/dc/elements/1.1/",
-        "xmlns:dcterms" => "http://purl.org/dc/terms/"
+        "xmlns:dcterms" => "http://purl.org/dc/terms/",
+        "xmlns:dcmitype"=>"http://purl.org/dc/dcmitype/",
+        "xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instance"
       }
       xs = {
         "xsi:type"=>"dcterms:W3CDTF"
@@ -51,7 +56,7 @@ module DocProp
 
       user = "Rail wordx/#{Wordx::VERSION}$Linux_X86_64" if user.nil?
       description = "Documented created by Rail wordx/#{Wordx::VERSION}$Linux_X86_64"
-      language = "US-EN" if language.nil?
+      language = "en-US" if language.nil?
       revision = "1.0" if revision.nil?
       subject = "" if subject.nil?
       title = "" if title.nil?
@@ -73,7 +78,7 @@ module DocProp
       file_path = @docProps_path + "core.xml"
       File.delete(file_path) if File.exists?(file_path)
       File.open(file_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>',''))
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
       end
     end
   end

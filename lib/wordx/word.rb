@@ -14,7 +14,8 @@ module Word
     def create_font_table(fonts = nil)
 
       ns = {
-        "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+        "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+        "xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instance"
       }
       if fonts.nil?
         fonts = [{:name=>"Times New Roman",:charset=>"00",:family=>"roman",:pitch=>"variable"}]
@@ -43,15 +44,18 @@ module Word
       word_path = @word_path + "fontTable.xml"
       File.delete(word_path) if File.exists?(word_path)
       File.open(word_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>',''))
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
       end
     end
 
     def create_rels(fonts = nil)
 
-
+      ns = {
+        "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+        "xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instance"
+      }
       builder = Nokogiri::XML::Builder.new do |xml|
-        xml.Relationships {
+        xml.Relationships(ns) {
           xml.Relationship "Id"=>"rId1", "Type"=>"http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles", "Target"=>"styles.xml"
           xml.Relationship "Id"=>"rId2", "Type"=>"http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering", "Target"=>"numbering.xml"
           xml.Relationship "Id"=>"rId3", "Type"=>"http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable", "Target"=>"fontTable.xml"
@@ -62,7 +66,7 @@ module Word
       word_rels_path = @word_rels_path + "document.xml.rels"
       File.delete(word_rels_path) if File.exists?(word_rels_path)
       File.open(word_rels_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>',''))
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
       end
 
     end
@@ -85,7 +89,7 @@ module Word
       word_path = @word_path + "settings.xml"
       File.delete(word_path) if File.exists?(word_path)
       File.open(word_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>',''))
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
       end
 
     end
@@ -129,7 +133,44 @@ module Word
       doc_path = @word_path + "document.xml"
       File.delete(doc_path) if File.exists?(doc_path)
       File.open(doc_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>',''))
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
+      end
+    end
+
+    def create_styles(styles = nil)
+
+      unless styles.nil?
+        styles = [{:type=>"paragraph",:styleId=>"Normal", :name=>"Normal", :basedOn=>"", :next=>"Normal", :jc=>"left", :ascii=>"Liberation Serif", :size=>"24",:color=> "00000A"}]
+      end
+      ns = {
+        "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+        "xmlns:w14"=>"http://schemas.microsoft.com/office/word/2010/wordml",
+        "xmlns:mc"=>"http://schemas.openxmlformats.org/markup-compatibility/2006"
+      }
+
+      builder = Nokogiri::XML::Builder.new do |xml|
+        xml[:w].styles(ns,"mc:Ignorable"=>"w14") {
+          xml[:w].docDefaults{
+            xml[:w].rPrDefault {
+              xml[:w].rPr {
+                xml[:w].rFonts
+                xml[:w].szCs
+                xml[:w].lang
+              }
+            }
+            xml[:w].pPrDefault {
+              xml[:w].pPr {
+                xml[:w].widowControl
+              }
+            }
+          }
+        }
+      end
+
+      doc_path = @word_path + "styles.xml"
+      File.delete(doc_path) if File.exists?(doc_path)
+      File.open(doc_path, "w+") do |fw|
+        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
       end
     end
 

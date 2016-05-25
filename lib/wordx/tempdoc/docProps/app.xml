@@ -1,5 +1,5 @@
-
-<Properties>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Properties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Template/>
   <TotalTime>4</TotalTime>
   <Application>Rail wordx/0.0.1$Linux_X86_64</Application>

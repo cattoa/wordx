@@ -16,4 +16,5 @@ module Wordx
   word.create_rels()
   word.create_settings()
   word.create_document()
+  word.create_styles()
 end

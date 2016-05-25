@@ -1,5 +1,5 @@
-
-<w:fonts xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:fonts xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <w:font w:name="Times New Roman">
     <w:charset w:val="00"/>
     <w:family w:val="roman"/>
