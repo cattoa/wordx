@@ -4,7 +4,7 @@
     <w:p>
       <w:pPr>
         <w:pStyle w:val="Heading1"/>
-        <w:spacing>[{"w:before"=&gt;"240"}, {"w:after"=&gt;"120"}]</w:spacing>
+        <w:spacing w:before="240" w:after="120"/>
         <w:rPr/>
       </w:pPr>
       <w:r>
@@ -17,7 +17,7 @@
     <w:p>
       <w:pPr>
         <w:pStyle w:val="Heading2"/>
-        <w:spacing/>
+        <w:spacing w:before="" w:after=""/>
         <w:rPr/>
       </w:pPr>
       <w:r>
@@ -30,7 +30,7 @@
     <w:p>
       <w:pPr>
         <w:pStyle w:val="Heading3"/>
-        <w:spacing/>
+        <w:spacing w:before="" w:after=""/>
         <w:rPr/>
       </w:pPr>
       <w:r>
@@ -43,7 +43,7 @@
     <w:p>
       <w:pPr>
         <w:pStyle w:val="Heading"/>
-        <w:spacing/>
+        <w:spacing w:before="" w:after=""/>
         <w:rPr/>
       </w:pPr>
       <w:r>
@@ -56,7 +56,7 @@
     <w:p>
       <w:pPr>
         <w:pStyle w:val="Normal"/>
-        <w:spacing/>
+        <w:spacing w:before="" w:after=""/>
         <w:rPr/>
       </w:pPr>
       <w:r>

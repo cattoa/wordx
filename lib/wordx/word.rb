@@ -116,8 +116,8 @@ module Word
               xml[:w].p{
                 xml[:w].pPr {
                   xml[:w].pStyle("w:val"=>doc_param[:style]) unless doc_param[:style].nil?
-                  spacing_detail = [{"w:before"=>doc_param[:before]}] unless doc_param[:before].nil?
-                  spacing_detail << {"w:after"=>doc_param[:after]} unless doc_param[:after].nil?
+                  spacing_detail = {"w:before"=>doc_param[:before],
+                                    "w:after"=>doc_param[:after]}
                   xml[:w].spacing (spacing_detail)
                   xml[:w].rPr
                 }
@@ -137,10 +137,10 @@ module Word
       end
     end
 
-    def create_styles(styles = nil)
+    def create_styles(doc_styles = nil)
 
-      unless styles.nil?
-        styles = [{:type=>"paragraph",:styleId=>"Normal", :name=>"Normal", :basedOn=>"", :next=>"Normal", :jc=>"left", :ascii=>"Liberation Serif", :size=>"24",:color=> "00000A"}]
+      if doc_styles.nil?
+        doc_styles = [{:type=>"paragraph",:styleId=>"Normal", :name=>"Normal", :basedOn=>"", :next=>"Normal", :jc=>"left", :ascii=>"Liberation Serif", :size=>"24",:color=> "00000A"}]
       end
       ns = {
         "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main",
@@ -164,6 +164,29 @@ module Word
               }
             }
           }
+          doc_styles.each do |doc_style|
+            style_attr = {"w:type"=>doc_style[:type],"w:styleId"=>doc_style[:styleId]}
+            xml[:w].style(style_attr)  {
+              xml[:w].name "w:va"=>doc_style[:name] unless doc_style[:name].nil?
+              xml[:w].basedOn
+              xml[:w].next
+              xml[:w].qFormat
+              xml[:w].pPr {
+                xml[:w].keepNext
+                xml[:w].spacing
+                xml[:w].widowControl
+                xml[:w].bidi
+                xml[:w].jc
+              }
+              xml[:w].rPr {
+                xml[:w].rFonts
+                xml[:w].color
+                xml[:w].sz
+                xml[:w].szCs
+                xml[:w].lanf
+              }
+            }
+          end
         }
       end
 
