@@ -1,0 +1,23 @@
+name: Normal
+style: paragraph
+id: Normal
+font_ascii: Liberation Serif
+font_ansi: Liberation Serif
+font_east_asia: Noto Sans CJK SC Regular
+font_cs: FreeSans
+font_size: 24
+font_color: 00000A
+font_lang_default: en-ZA
+font_lang_east_asia: zh-CN
+font_lang_bidi: hi-IN
+style_based_on: DefaultText
+style_next: Normal
+spacing_line_rule: auto
+spacing_line: 288
+spacing_before: 24
+spacing_after: 12
+indent_left: 0
+indent_hanging: 0
+outline_level: 0
+para_keep_with_next: false
+para_supress_line_numers: false
