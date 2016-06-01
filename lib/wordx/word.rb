@@ -1,5 +1,7 @@
 require 'fileutils'
 require 'nokogiri'
+require "wordx/styles"
+
 module Word
   class Content
     def initialize(path = nil)
@@ -137,11 +139,9 @@ module Word
       end
     end
 
-    def create_styles(doc_styles = nil)
+    def create_styles()
 
-      if doc_styles.nil?
-        doc_styles = [{:type=>"paragraph",:styleId=>"Normal", :name=>"Normal", :basedOn=>"", :next=>"Normal", :jc=>"left", :ascii=>"Liberation Serif", :size=>"24",:color=> "00000A"}]
-      end
+      doc_styles = Word::Styles.new
       ns = {
         "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main",
         "xmlns:w14"=>"http://schemas.microsoft.com/office/word/2010/wordml",
@@ -153,10 +153,10 @@ module Word
           xml[:w].docDefaults{
             xml[:w].rPrDefault {
               xml[:w].rPr {
-                xml[:w].rFonts "w:ascii"=>"Liberation Serif" "w:hAnsi"=>"Liberation Serif" "w:eastAsia"=>"Noto Sans CJK SC Regular" "w:cs"=>"FreeSans"
+                xml[:w].rFonts "w:ascii"=> "Liberation Serif", "w:hAnsi"=> "Liberation Serif", "w:eastAsia"=> "Noto Sans CJK SC Regular", "w:cs"=> "FreeSans"
                 xml[:w].sz "w:val"=>"24"
                 xml[:w].szCs "w:val"=>"24"
-                xml[:w].lang "w:val"=>"en-ZA" "w:eastAsia"=>"zh-CN" "w:bidi"=>"hi-IN"
+                xml[:w].lang "w:val"=> "en-ZA", "w:eastAsia"=> "zh-CN", "w:bidi"=> "hi-IN"
               }
             }
             xml[:w].pPrDefault {
@@ -165,7 +165,7 @@ module Word
               }
             }
           }
-          doc_styles.each do |doc_style|
+          doc_styles.list do |doc_style|
             style_attr = {"w:type"=>doc_style[:type],"w:styleId"=>doc_style[:styleId]}
             xml[:w].style(style_attr)  {
               xml[:w].name "w:va"=>doc_style[:name] unless doc_style[:name].nil?
