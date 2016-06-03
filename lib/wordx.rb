@@ -6,6 +6,7 @@ require "wordx/word"
 
 
 module Wordx
+  styles = Wordx::Styles.new()
   content_type = ContentType::Content.new()
   content_type.create()
   doc_props_app = DocProp::Content.new()
@@ -15,6 +16,5 @@ module Wordx
   word.create_font_table()
   word.create_rels()
   word.create_settings()
-  word.create_document()
   word.create_styles()
 end

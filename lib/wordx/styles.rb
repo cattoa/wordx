@@ -1,17 +1,19 @@
 require 'fileutils'
 require 'nokogiri'
-module Word
+require 'yaml'
+
+module Wordx
   class Styles
-    def self.initialize()
+    def initialize()
       path = File.expand_path(File.dirname(__FILE__) + '/styles/')
       Dir.open(path) do |dir|
         dir.each do |file|
-          register_style(path + '/' + file) if file.include?('.yml')
+          register_style(path + '/' + file) if file.include?('.yaml')
         end
       end
     end
 
-    def self.register_style(style_file_path)
+    def register_style(style_file_path)
       style = Style.new(YAML.load(IO.read(File.expand_path(style_file_path))))
       if !defined? @@_styles_list
         @@_styles_list = {}
@@ -19,13 +21,17 @@ module Word
       @@_styles_list[style.name.to_sym] = style
     end
 
-    def self.list
+    def list
       @@_styles_list.keys
+    end
+
+    def get_style(style_name)
+        return @@_styles_list[style_name]
     end
 
     protected
 
-    def self.method_missing(method, *args)
+    def method_missing(method, *args)
       if @@_styles_list.keys.include?(method)
         return @@_styles_list[method]
       end

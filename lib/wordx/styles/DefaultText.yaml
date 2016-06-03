@@ -1,6 +1,6 @@
-name: Normal
+name: DefaultText
 style: paragraph
-id: Normal
+id: DefaultText
 font_ascii: Liberation Serif
 font_ansi: Liberation Serif
 font_east_asia: Noto Sans CJK SC Regular

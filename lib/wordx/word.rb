@@ -141,7 +141,8 @@ module Word
 
     def create_styles()
 
-      doc_styles = Word::Styles.new
+      doc_styles = Wordx::Styles.new
+
       ns = {
         "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main",
         "xmlns:w14"=>"http://schemas.microsoft.com/office/word/2010/wordml",
@@ -149,6 +150,7 @@ module Word
       }
 
       builder = Nokogiri::XML::Builder.new do |xml|
+
         xml[:w].styles(ns,"mc:Ignorable"=>"w14") {
           xml[:w].docDefaults{
             xml[:w].rPrDefault {
@@ -165,7 +167,9 @@ module Word
               }
             }
           }
-          doc_styles.list do |doc_style|
+          doc_styles.list.each do |doc_style_name|
+            doc_style = Wordx::Style.doc_style_name:
+            puts doc_style.font_ascii
             style_attr = {"w:type"=>doc_style[:type],"w:styleId"=>doc_style[:styleId]}
             xml[:w].style(style_attr)  {
               xml[:w].name "w:va"=>doc_style[:name] unless doc_style[:name].nil?
