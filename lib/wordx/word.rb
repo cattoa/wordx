@@ -168,7 +168,7 @@ module Word
             }
           }
           doc_styles.list.each do |doc_style_name|
-            doc_style = Wordx::Style.doc_style_name:
+            doc_style = Wordx::Style.doc_style_name
             puts doc_style.font_ascii
             style_attr = {"w:type"=>doc_style[:type],"w:styleId"=>doc_style[:styleId]}
             xml[:w].style(style_attr)  {
