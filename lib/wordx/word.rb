@@ -168,29 +168,31 @@ module Word
             }
           }
           doc_styles.list.each do |doc_style_name|
-            doc_style = Wordx::Style.doc_style_name:
-            puts doc_style.font_ascii
-            style_attr = {"w:type"=>doc_style[:type],"w:styleId"=>doc_style[:styleId]}
-            xml[:w].style(style_attr)  {
-              xml[:w].name "w:va"=>doc_style[:name] unless doc_style[:name].nil?
-              xml[:w].basedOn
-              xml[:w].next
-              xml[:w].qFormat
-              xml[:w].pPr {
-                xml[:w].keepNext
-                xml[:w].spacing
-                xml[:w].widowControl
-                xml[:w].bidi
-                xml[:w].jc
+            unless doc_style_name==:DefaultText
+              doc_style = doc_styles.get_style(doc_style_name)
+              puts doc_style.font_ascii
+              style_attr = {"w:type"=>doc_style.style,"w:styleId"=>doc_style.id}
+              xml[:w].style(style_attr)  {
+                xml[:w].name "w:val"=>doc_style.name unless doc_style.name.nil?
+                xml[:w].basedOn "w:val"=>doc_style.style_based_on unless doc_style.style_based_on.nil?
+                xml[:w].next
+                xml[:w].qFormat
+                xml[:w].pPr {
+                  xml[:w].keepNext
+                  xml[:w].spacing
+                  xml[:w].widowControl
+                  xml[:w].bidi
+                  xml[:w].jc
+                }
+                xml[:w].rPr {
+                  xml[:w].rFonts
+                  xml[:w].color
+                  xml[:w].sz
+                  xml[:w].szCs
+                  xml[:w].lanf
+                }
               }
-              xml[:w].rPr {
-                xml[:w].rFonts
-                xml[:w].color
-                xml[:w].sz
-                xml[:w].szCs
-                xml[:w].lanf
-              }
-            }
+            end
           end
         }
       end

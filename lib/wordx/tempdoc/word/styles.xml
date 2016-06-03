@@ -15,4 +15,24 @@
       </w:pPr>
     </w:pPrDefault>
   </w:docDefaults>
+  <w:style w:type="paragraph" w:styleId="Normal">
+    <w:name w:val="Normal"/>
+    <w:basedOn w:val="DefaultText"/>
+    <w:next/>
+    <w:qFormat/>
+    <w:pPr>
+      <w:keepNext/>
+      <w:spacing/>
+      <w:widowControl/>
+      <w:bidi/>
+      <w:jc/>
+    </w:pPr>
+    <w:rPr>
+      <w:rFonts/>
+      <w:color/>
+      <w:sz/>
+      <w:szCs/>
+      <w:lanf/>
+    </w:rPr>
+  </w:style>
 </w:styles>
