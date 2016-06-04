@@ -187,15 +187,24 @@ module Word
                   }
                   xml[:w].spacing spacing
                   xml[:w].widowControl
-                  xml[:w].bidi
-                  xml[:w].jc
                 }
                 xml[:w].rPr {
-                  xml[:w].rFonts
-                  xml[:w].color
-                  xml[:w].sz
-                  xml[:w].szCs
-                  xml[:w].lanf
+                  font = {
+                    "w:ascii"=>doc_style.font_ascii unless doc_style.font_ascii.nil?,
+                    "w:hAnsi"=>doc_style.font_ansi unless doc_style.font_ansi.nil?,
+                    "w:eastAsia"=>doc_style.font_lang_east_asia unless doc_style.font_lang_east_asia.nil?,
+                    "w:cs"=>doc_style.font_cs unless doc_style.font_cs.nil?
+                  }
+                  xml[:w].rFonts fonts
+                  xml[:w].color "w:val"=>doc_style.font_color unless doc_style.font_color.nil?
+                  xml[:w].sz "w:val"=>doc_style.font_size unless doc_style.font_size.nil?
+                  xml[:w].szCs "w:val"=>doc_style.font_size unless doc_style.font_size.nil?
+                  lang = {
+                    "w:val"=>doc_style.font_lang_default unless doc_style.font_lang_default.nil?,
+                    "w:eastAsia"=>doc_style.font_lang_east_asia unless doc_style.font_lang_east_asia.nil?,
+                    "w:bidi"=>doc_style.font_lang_bidi unless doc_style.font_lang_bidi.nil?
+                  }
+                  xml[:w].lang
                 }
               }
             end
