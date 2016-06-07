@@ -13,10 +13,10 @@ module DocProp
 
     def create_app(pages = nil, words =nil, characters =nil, characters_with_spaces = nil, paragraphs =nil)
       pages = 1 if pages.nil?
-      words = 1 if words.nil?
-      characters = 1 if characters.nil?
-      characters_with_spaces = 1 if characters_with_spaces.nil?
-      paragraphs = 1 if paragraphs.nil?
+      words = 60 if words.nil?
+      characters = 180 if characters.nil?
+      characters_with_spaces = 167 if characters_with_spaces.nil?
+      paragraphs = 12 if paragraphs.nil?
       ns = {
         "xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instance"
       }
@@ -57,7 +57,7 @@ module DocProp
       user = "Rail wordx/#{Wordx::VERSION}$Linux_X86_64" if user.nil?
       description = "Documented created by Rail wordx/#{Wordx::VERSION}$Linux_X86_64"
       language = "en-US" if language.nil?
-      revision = "1.0" if revision.nil?
+      revision = "1" if revision.nil?
       subject = "" if subject.nil?
       title = "" if title.nil?
 

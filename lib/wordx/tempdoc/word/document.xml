@@ -12,57 +12,13 @@
         <w:t>Heading 1 Text</w:t>
       </w:r>
     </w:p>
-  </w:body>
-  <w:body>
-    <w:p>
-      <w:pPr>
-        <w:pStyle w:val="Heading2"/>
-        <w:spacing w:before="" w:after=""/>
-        <w:rPr/>
-      </w:pPr>
-      <w:r>
-        <w:rPr/>
-        <w:t>Heading 2 Text</w:t>
-      </w:r>
-    </w:p>
-  </w:body>
-  <w:body>
-    <w:p>
-      <w:pPr>
-        <w:pStyle w:val="Heading3"/>
-        <w:spacing w:before="" w:after=""/>
-        <w:rPr/>
-      </w:pPr>
-      <w:r>
-        <w:rPr/>
-        <w:t>Heading 3 Text</w:t>
-      </w:r>
-    </w:p>
-  </w:body>
-  <w:body>
-    <w:p>
-      <w:pPr>
-        <w:pStyle w:val="Heading"/>
-        <w:spacing w:before="" w:after=""/>
-        <w:rPr/>
-      </w:pPr>
-      <w:r>
-        <w:rPr/>
-        <w:t>Heading Text</w:t>
-      </w:r>
-    </w:p>
-  </w:body>
-  <w:body>
-    <w:p>
-      <w:pPr>
-        <w:pStyle w:val="Normal"/>
-        <w:spacing w:before="" w:after=""/>
-        <w:rPr/>
-      </w:pPr>
-      <w:r>
-        <w:rPr/>
-        <w:t>Normal Texy</w:t>
-      </w:r>
-    </w:p>
+    <w:sectPr>
+      <w:type w:val="nextPage"/>
+      <w:pgSz w:w="11906" w:h="16838"/>
+      <w:pgMar w:left="1134" w:right="1134" w:header="0" w:top="1134" w:footer="0" w:bottom="1134" w:gutter="0"/>
+      <w:pgNumType w:fmt="decimal"/>
+      <w:formProt w:val="false"/>
+      <w:textDirection w:val="lrTb"/>
+    </w:sectPr>
   </w:body>
 </w:document>
