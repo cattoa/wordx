@@ -6,9 +6,9 @@ module Word
   class Content
     def initialize(path = nil)
       path = File.dirname(__FILE__) + "/tempdoc/word/" if path.nil?
-      path_rels = path + "/_rels/"
       FileUtils::mkdir_p path unless File.exists?(path)
       @word_path = path
+      path_rels = path + "/_rels/"
       FileUtils::mkdir_p path_rels unless File.exists?(path_rels)
       @word_rels_path = path_rels
     end

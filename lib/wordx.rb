@@ -2,6 +2,7 @@ require "wordx/version"
 require "wordx/content_type"
 require "wordx/docProp"
 require "wordx/word"
+require "wordx/rels"
 
 
 
@@ -19,4 +20,6 @@ module Wordx
   word.create_styles()
   word.create_numbering()
   word.create_document()
+  rels = Rels::Content.new()
+  rels.create_rels()
 end
