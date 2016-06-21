@@ -1,8 +1,8 @@
 require 'fileutils'
 require 'nokogiri'
 
-module Rels
-  class Content
+module Wordx
+  class Rels
     def initialize(path = nil)
       path_rels = File.dirname(__FILE__) + "/tempdoc/_rels/" if path.nil?
       FileUtils::mkdir_p path_rels unless File.exists?(path_rels)

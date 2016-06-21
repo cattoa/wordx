@@ -1,6 +1,6 @@
 require 'fileutils'
-module ContentType
-  class Content
+module Wordx
+  class ContentType
     def initialize(path = nil)
       path = File.dirname(__FILE__) + "/tempdoc/" if path.nil?
       FileUtils::mkdir_p path unless File.exists?(path)

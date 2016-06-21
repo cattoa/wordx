@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'nokogiri'
-module DocProp
-  class Content
+module Wordx
+  class DocProp
     def initialize(path = nil)
 
       path_rels = File.dirname(__FILE__) + "/tempdoc/_rels/" if path.nil?

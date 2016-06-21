@@ -2,8 +2,8 @@ require 'fileutils'
 require 'nokogiri'
 require "wordx/styles"
 
-module Word
-  class Content
+module Wordx
+  class Word
     def initialize(path = nil)
       path = File.dirname(__FILE__) + "/tempdoc/word/" if path.nil?
       FileUtils::mkdir_p path unless File.exists?(path)
