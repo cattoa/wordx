@@ -8,12 +8,12 @@ describe '.Wordx' do
   end
 
   before :each do
-    @documents = Wordx::Documents.new()
+    @documents = Wordx::Document.new()
     @styles = @documents.list_styles()
   end
 
   it 'takes no parameters and returns a Wordx::Documents object' do
-      expect(@documents).to be_an_instance_of Wordx::Documents
+      expect(@documents).to be_an_instance_of Wordx::Document
   end
 
   it 'documents should contain 2 Wordx::Styles' do

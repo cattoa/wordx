@@ -7,7 +7,7 @@ require "wordx/rels"
 
 
 module Wordx
-  class Documents
+  class Document
     def initialize()
       @@styles = Wordx::Styles.new()
     end
