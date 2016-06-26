@@ -10,6 +10,7 @@ describe '.Wordx' do
   before :each do
     @document = Wordx::Document.new()
     @styles = @document.list_styles()
+    @para_key = @document.new_paragraph()
   end
 
   it 'takes no parameters and returns a Wordx::Documents object' do
@@ -29,8 +30,12 @@ describe '.Wordx' do
   end
 
   it 'add paragraph to document' do
-    @para_key = @document.new_paragraph()
     expect(@para_key).to eq :para_001
+  end
+
+  it 'paragraphs should contain a paragraph key of para_001' do
+    keys = @document.list_paragraphs
+    expect(keys).to include(:para_001)
   end
 
   it 'add text to paragrah' do

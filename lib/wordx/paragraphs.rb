@@ -20,13 +20,19 @@ module Wordx
       return para_key
     end
 
-    def change_paragraph_text(text, key=nil)
-      key = get_current_para_key if key.nil?
+    def change_paragraph_text(text, key)
+      puts "first"
+      if key.nil?
+        puts "key nil"
+        key = get_current_para_key
+      end
+      puts key
       paragraph = @@paragraphs[key]
       unless paragraph.nil?
         text = paragraph.text + text unless paragraph.text.nil?
       end
       paragraph.text = text unless paragraph.nil?
+      puts paragraph.text
     end
 
     def change_paragraph_style(style, key=nil)
@@ -58,6 +64,7 @@ module Wordx
       paragraph = @@paragraphs[key]
       text = paragraph.text unless paragraph.nil?
       text = "No return" if text.nil?
+      return text
     end
 
     private

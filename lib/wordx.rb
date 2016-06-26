@@ -27,7 +27,13 @@ module Wordx
       para_key = @@paragraphs.new_paragraph(style,font,font_size)
     end
 
+    def list_paragraphs()
+      @@paragraphs.list
+    end
+
     def add_text(para_key, text = nil)
+      puts para_key
+      puts text
       text = "" if text.nil?
       @@paragraphs.change_paragraph_text(text,para_key)
     end
