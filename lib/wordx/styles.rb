@@ -29,6 +29,7 @@ module Wordx
         return @@_styles_list[style_name]
     end
 
+
     protected
 
     def method_missing(method, *args)

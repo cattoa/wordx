@@ -1,7 +1,7 @@
 require "wordx/styles"
 
 module Wordx
-  class Document
+  class Paragraphs
     def initialize()
       @@current_paragraph = 0
       if !defined? @@paragraphs
@@ -13,21 +13,23 @@ module Wordx
       @@paragraphs.keys
     end
 
-    def new_paragraph(text, Wordx::Style style, font, size)
+    def new_paragraph(style, font, size)
       para_key = get_next_para_key()
-      paragraph = Paragragh.new(para_key,text, style, font, size)
+      paragraph = Wordx::Paragraph.new(para_key, style, font, size)
       @@paragraphs[para_key] =  paragraph
+      return para_key
     end
 
     def change_paragraph_text(text, key=nil)
-      if key.nil?
-        key = get_current_para_key
-      end
+      key = get_current_para_key if key.nil?
       paragraph = @@paragraphs[key]
-      paragraph.text(text) unless paragraph.nil?
+      unless paragraph.nil?
+        text = paragraph.text + text unless paragraph.text.nil?
+      end
+      paragraph.text = text unless paragraph.nil?
     end
 
-    def change_paragraph_style(Wordx::Style style, key=nil)
+    def change_paragraph_style(style, key=nil)
       if key.nil?
         key = get_current_para_key
       end
@@ -51,14 +53,23 @@ module Wordx
       paragraph.size(size) unless paragraph.nil?
     end
 
+    def get_paragraph_text(key)
+      key = get_current_para_key if key.nil?
+      paragraph = @@paragraphs[key]
+      text = paragraph.text unless paragraph.nil?
+      text = "No return" if text.nil?
+    end
+
     private
     def get_next_para_key()
-      @@current_paragraph++
-      next_count = get_current_para()
+      @@current_paragraph += 1
+      return get_current_para_key()
     end
 
     def get_current_para_key()
-      current_para = "para_" + @@current_paragraph.to_s.rjust(3,'0').to_sym
+      key = @@current_paragraph.to_s.rjust(3,'0')
+      key = "para_" + key
+      return key.to_sym
     end
 
   end
@@ -67,28 +78,12 @@ module Wordx
     attr_accessor :key, :text, :style, :font, :size
 
 
-    def initialize(key, text, Wordx::Style style, font, size)
-      @@key = key
-      @@text = text
-      @@style = style
-      @@font = font
-      @@size = size
-    end
-
-    def text(text_in)
-      @@text = text_in
-    end
-
-    def style (Wordx::Style style_in)
-      @@style = style
-    end
-
-    def font(font_in)
-      @@font = font_in
-    end
-
-    def size(size_in)
-      @@size = size_in
+    def initialize(key,style, font, size)
+      @key = key
+      @text = ""
+      @style = style
+      @font = font
+      @size = size
     end
 
   end
