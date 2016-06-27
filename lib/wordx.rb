@@ -31,9 +31,7 @@ module Wordx
       @@paragraphs.list
     end
 
-    def add_text(para_key, text = nil)
-      puts para_key
-      puts text
+    def add_text(para_key = nil, text = nil)
       text = "" if text.nil?
       @@paragraphs.change_paragraph_text(text,para_key)
     end

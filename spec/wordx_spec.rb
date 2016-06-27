@@ -38,9 +38,12 @@ describe '.Wordx' do
     expect(keys).to include(:para_001)
   end
 
-  it 'add text to paragrah' do
+  it 'add text to paragrah par_001' do
     @document.add_text(@para_key, "Hello World")
     expect(@document.get_text(@para_key)).to eq "Hello World"
   end
-
+  it 'add text to default paragrah' do
+    @document.add_text( , "Hello World")
+    expect(@document.get_text(@para_key)).to eq "Hello World"
+  end
 end
