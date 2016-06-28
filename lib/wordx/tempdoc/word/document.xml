@@ -3,13 +3,30 @@
   <w:body>
     <w:p>
       <w:pPr>
-        <w:pStyle w:val="Heading1"/>
-        <w:spacing w:before="240" w:after="120"/>
+        <w:pStyle w:val="paragraph"/>
+        <w:spacing w:before="24" w:after="12"/>
         <w:rPr/>
       </w:pPr>
       <w:r>
+        <w:rPr>
+          <w:b w:val="true"/>
+          <w:bCs w:val="true"/>
+        </w:rPr>
+        <w:t>Hello World glad to know you</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="paragraph"/>
+        <w:spacing w:before="24" w:after="12"/>
         <w:rPr/>
-        <w:t>Heading 1 Text</w:t>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:b w:val="false"/>
+          <w:bCs w:val="false"/>
+        </w:rPr>
+        <w:t>Third rock from the sun is earth</w:t>
       </w:r>
     </w:p>
     <w:sectPr>

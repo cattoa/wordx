@@ -1,16 +1,17 @@
 require 'spec_helper'
 require 'wordx'
 
-describe '.Wordx' do
+RSpec.describe '.Wordx' do
 
   it 'version number is 0.0.1' do
     expect(Wordx::VERSION).to eq '0.0.1'
   end
 
-  before :each do
+  before (:context) do
     @document = Wordx::Document.new()
     @styles = @document.list_styles()
     @para_key = @document.new_paragraph()
+
   end
 
   it 'takes no parameters and returns a Wordx::Documents object' do
@@ -39,11 +40,50 @@ describe '.Wordx' do
   end
 
   it 'add text to paragrah par_001' do
-    @document.add_text(@para_key, "Hello World")
+    @document.add_text("Hello World",@para_key)
     expect(@document.get_text(@para_key)).to eq "Hello World"
   end
-  it 'add text to default paragrah' do
-    @document.add_text( , "Hello World")
-    expect(@document.get_text(@para_key)).to eq "Hello World"
+  it 'add text to current paragrah' do
+    @document.add_text(" glad to know you")
+    expect(@document.get_text()).to eq "Hello World glad to know you"
   end
-end
+
+   it 'add second paragraph to document' do
+     @para_key_2 = @document.new_paragraph()
+     expect(@para_key_2).to eq :para_002
+   end
+
+   it 'add text to paragraph 2' do
+     @document.add_text("Third rock from the sun",@para_key_2)
+     expect(@document.get_text(@para_key_2)).to eq "Third rock from the sun"
+   end
+   it 'add text to current paragrah' do
+     @document.add_text(" is earth")
+     expect(@document.get_text()).to eq "Third rock from the sun is earth"
+   end
+   it 'the first paragraph is till the same' do
+     expect(@document.get_text(@para_key)).to eq "Hello World glad to know you"
+   end
+   it 'the default bold setting for the paragraph is false' do
+     expect(@document.get_bold(@para_key)).to eq false
+   end
+   it 'set paragraph bold=true' do
+     @document.set_bold(true,@para_key)
+     expect(@document.get_bold(@para_key)).to eq true
+   end
+
+   it 'set paragraph to bold=false' do
+     @document.set_bold(false,@para_key)
+     expect(@document.get_bold(@para_key)).to eq false
+   end
+
+   it 'set paragraph bold=true' do
+     @document.set_bold(true,@para_key)
+     expect(@document.get_bold(@para_key)).to eq true
+   end
+   
+   it 'set create document' do
+     @document.create_document()
+   end
+
+ end

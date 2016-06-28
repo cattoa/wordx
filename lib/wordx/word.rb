@@ -157,36 +157,35 @@ module Wordx
 
     end
 
-    def create_document(doc = nil)
+    def create_document(paragraphs)
 
       ns = {
         "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main",
         "xmlns:mc"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main"
       }
-      if doc.nil?
-        doc = [{:style=>"Heading1",:text=>"Heading 1 Text",:before=>"240",:after=>"120"}]
-        # doc << {:style=>"Heading2",:text=>"Heading 2 Text"}
-        # doc << {:style=>"Heading3",:text=>"Heading 3 Text"}
-        # doc << {:style=>"Heading",:text=>"Heading Text"}
-        # doc << {:style=>"Normal",:text=>"Normal Texy"}
-      end
+
 
 
       builder = Nokogiri::XML::Builder.new do |xml|
         xml[:w].document(ns,"mc:Ignorable"=>"w14 wp14") {
           xml[:w].body {
-            doc.each do |doc_param|
+            paragraphs.list.each do |para_key|
+              style = paragraphs.get_paragraph_style(para_key)
               xml[:w].p{
                 xml[:w].pPr {
-                  xml[:w].pStyle("w:val"=>doc_param[:style]) unless doc_param[:style].nil?
-                  spacing_detail = {"w:before"=>doc_param[:before],
-                                    "w:after"=>doc_param[:after]}
+                  xml[:w].pStyle("w:val"=>style.style) unless style.nil?
+                  spacing_detail = {"w:before"=>style.spacing_before,
+                                    "w:after"=>style.spacing_after}
                   xml[:w].spacing (spacing_detail)
                   xml[:w].rPr
                 }
                 xml[:w].r{
-                  xml[:w].rPr
-                  xml[:w].t (doc_param[:text]) unless doc_param[:text].nil?
+                  xml[:w].rPr{
+                    xml[:w].b("w:val"=>paragraphs.get_paragraph_bold(para_key)) unless paragraphs.nil?
+                    xml[:w].bCs("w:val"=>paragraphs.get_paragraph_bold(para_key)) unless paragraphs.nil?
+                  }
+
+                  xml[:w].t (paragraphs.get_paragraph_text(para_key)) unless paragraphs.nil?
                 }
               }
             end
@@ -239,7 +238,6 @@ module Wordx
           doc_styles.list.each do |doc_style_name|
             unless doc_style_name==:DefaultText
               doc_style = doc_styles.get_style(doc_style_name)
-              puts doc_style.font_ascii
               style_attr = {"w:type"=>doc_style.style,"w:styleId"=>doc_style.id}
               xml[:w].style(style_attr)  {
                 xml[:w].name "w:val"=>doc_style.name unless doc_style.name.nil?
