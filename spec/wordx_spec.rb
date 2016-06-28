@@ -10,8 +10,7 @@ RSpec.describe '.Wordx' do
   before (:context) do
     @document = Wordx::Document.new()
     @styles = @document.list_styles()
-    @para_key = @document.new_paragraph()
-
+    @paragraph = @document.new_paragraph()
   end
 
   it 'takes no parameters and returns a Wordx::Documents object' do
@@ -30,8 +29,9 @@ RSpec.describe '.Wordx' do
     expect(@styles).to include(:Normal)
   end
 
+
   it 'add paragraph to document' do
-    expect(@para_key).to eq :para_001
+    expect(@paragraph.key).to eq :para_001
   end
 
   it 'paragraphs should contain a paragraph key of para_001' do
@@ -40,50 +40,64 @@ RSpec.describe '.Wordx' do
   end
 
   it 'add text to paragrah par_001' do
-    @document.add_text("Hello World",@para_key)
-    expect(@document.get_text(@para_key)).to eq "Hello World"
+    @paragraph.text = "Hello World"
+    expect(@paragraph.text).to eq "Hello World"
   end
+
   it 'add text to current paragrah' do
-    @document.add_text(" glad to know you")
-    expect(@document.get_text()).to eq "Hello World glad to know you"
+    @paragraph.text += " glad to know you"
+    expect(@paragraph.text).to eq "Hello World glad to know you"
   end
 
    it 'add second paragraph to document' do
-     @para_key_2 = @document.new_paragraph()
-     expect(@para_key_2).to eq :para_002
+     paragraph = @document.new_paragraph()
+     expect(paragraph.key).to eq :para_002
    end
 
-   it 'add text to paragraph 2' do
-     @document.add_text("Third rock from the sun",@para_key_2)
-     expect(@document.get_text(@para_key_2)).to eq "Third rock from the sun"
+   it 'add text to new paragraph ' do
+     paragraph = @document.new_paragraph()
+     paragraph.text = "Third rock from the sun"
+     expect(paragraph.text).to eq "Third rock from the sun"
    end
-   it 'add text to current paragrah' do
-     @document.add_text(" is earth")
-     expect(@document.get_text()).to eq "Third rock from the sun is earth"
+   it 'add text to paragraph para_001' do
+     paragraph = @document.get_paragraph(:para_001)
+     paragraph.text += ".Hope you have a great day!"
+     expect(paragraph.text).to eq "Hello World glad to know you.Hope you have a great day!"
    end
-   it 'the first paragraph is till the same' do
-     expect(@document.get_text(@para_key)).to eq "Hello World glad to know you"
+
+   it 'the second paragraph is still empty' do
+     paragraph = @document.get_paragraph(:para_002)
+     expect(paragraph.text).to eq ""
    end
+
+
    it 'the default bold setting for the paragraph is false' do
-     expect(@document.get_bold(@para_key)).to eq false
+     paragraph = @document.get_paragraph(:para_001)
+     expect(paragraph.bold).to eq false
    end
+
+
    it 'set paragraph bold=true' do
-     @document.set_bold(true,@para_key)
-     expect(@document.get_bold(@para_key)).to eq true
+     paragraph = @document.get_paragraph(:para_001)
+     paragraph.bold = true
+     expect(paragraph.bold).to eq true
    end
 
    it 'set paragraph to bold=false' do
-     @document.set_bold(false,@para_key)
-     expect(@document.get_bold(@para_key)).to eq false
+     paragraph = @document.get_paragraph(:para_001)
+     paragraph.bold = false
+     expect(paragraph.bold).to eq false
    end
 
-   it 'set paragraph bold=true' do
-     @document.set_bold(true,@para_key)
-     expect(@document.get_bold(@para_key)).to eq true
-   end
-   
-   it 'set create document' do
-     @document.create_document()
+   it 'create a table in the document' do
+     rows = 3
+     columns = 3
+     paragraph = @document.get_paragraph(:para_001)
+     table = paragraph.new_table(rows,columns, :Normal)
    end
 
+  #  it 'set create document' do
+  #    @document.create_document()
+  #
+  #  end
  end
