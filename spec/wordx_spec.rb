@@ -93,8 +93,34 @@ RSpec.describe '.Wordx' do
      rows = 3
      columns = 3
      paragraph = @document.get_paragraph(:para_001)
-     table = paragraph.new_table(rows,columns, :Normal)
+     table = paragraph.new_table(rows,columns)
+     expect(table.length).to eq 3
    end
+
+
+   it 'add text to cell(0,0) and get text from cell(0,0)' do
+     rows = 3
+     columns = 3
+     paragraph = @document.get_paragraph(:para_001)
+     table = paragraph.new_table(rows,columns)
+     cell = table.cell(0,0)
+     cell.text = "Hello World"
+     expect(cell.text).to eql "Hello World"
+   end
+
+   it 'add text to cell(0,0) and get text from cell(0,1)' do
+     rows = 3
+     columns = 3
+     paragraph = @document.get_paragraph(:para_001)
+     table = paragraph.new_table(rows,columns)
+     cell = table.cell(0,0)
+     cell.text = "Hello World"
+     cell = table.cell(0,1)
+     expect(cell.text).to eql ""
+
+   end
+
+
 
   #  it 'set create document' do
   #    @document.create_document()

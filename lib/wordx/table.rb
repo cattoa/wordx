@@ -5,49 +5,56 @@ require "wordx/styles"
 
 module Wordx
   class Table
-    attr_accessor :cell
-    def initialize(row_count=1,column_count=1,style=nil)
-      @current_table = 0
-      row_count = 1 unless row_count > 0
-      column_count = 1 unless column_count > 0
-      @style = style unless style.nil?
-
-      @cells=[]
-      i = 0
-      j=0
-      while i < row_count do
-        while j < column_count do
-          cell = Wordx::Cell.new(i,j)
-          @cells[i,j] = cell
-          j += 1
+    def initialize(row_count=1,column_count=1)
+      @row_count = row_count
+      @column_count = column_count
+      @current_row = 0
+      @current_row = 0
+      rows = []
+      @table = []
+      row = @row_count - 1
+      column = @column_count - 1
+      for i in (0..row) do
+        for j in (0..column) do
+          rows.push(Wordx::Cell.new)
         end
-        i += 1
+        @table.push(rows)
       end
+      @valid_alignments = ["left","right","center","both"]
+    end
+    def length
+      return @table.length
+    end
 
+    def cell(row,col)
+      row = @table[row]
+      if !row.nil?
+        cell = row[col]
+        return cell
+      end
+    end
+
+    def to_s
+      @table.to_s
     end
   end
 
   class Cell
-    attr_accessor :row, :column, :text, :style
+    attr_accessor :text, :bold, :align
 
-    def initialize(row = 0, coulmn = 0, style_key = nil)
-      styles = Wordx::Styles.new()
-      if style_key.nil?
-        style = styles.get_style(:DefaultText)
-      else
-        style = styles.get_style(style_key)
-      end
-      @row = row
-      @column = column
+    def initialize()
+      @text = ""
+      @bold = false
+      @align = "left"
     end
 
-  end
+    def align(align)
+      @align = "left" unless @valid_alignments.include?(align)
+    end
 
-  class Row
-
-  end
-
-  class Column
+    def bold(bold)
+      @bold = bold if bold.in?([true,false])
+    end
 
   end
 end

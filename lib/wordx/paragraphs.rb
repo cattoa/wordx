@@ -60,9 +60,9 @@ module Wordx
       @current_table = 0
     end
 
-    def new_table(row=nil,column=nil,style=nil)
+    def new_table(row=nil,column=nil)
       key = get_next_table_key
-      table = Wordx::Table.new(row,column,style)
+      table = Wordx::Table.new(row,column)
       @tables[key] = table
       return table
     end

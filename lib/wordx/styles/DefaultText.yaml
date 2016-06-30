@@ -21,3 +21,4 @@ indent_hanging: 0
 outline_level: 0
 para_keep_with_next: false
 para_supress_line_numers: false
+text_align: left
