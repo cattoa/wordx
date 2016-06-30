@@ -19,7 +19,7 @@ module Wordx
       return paragraph
     end
 
-    def get_paragraph(key=nil)
+    def paragraph(key=nil)
       paragraph = get_para(key)
     end
 

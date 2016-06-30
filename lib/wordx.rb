@@ -18,19 +18,19 @@ module Wordx
       @styles.list
     end
 
-    def get_style(style)
+    def style(style)
       if style.nil?
-        style = @styles.get_style(:DefaultText)
+        style = @styles.style(:DefaultText)
       else
-        style = @styles.get_style(style)
+        style = @styles.style(style)
       end
     end
 
     def new_paragraph(style=nil,font = nil, font_size=nil,bold=false)
       if style.nil?
-        style = @styles.get_style(:DefaultText)
+        style = @styles.style(:DefaultText)
       else
-        style = @styles.get_style(style)
+        style = @styles.style(style)
       end
       font = style.font_ascii if font.nil?
       size = style.font_size() if font_size.nil?
@@ -43,8 +43,8 @@ module Wordx
       @paragraphs.list
     end
 
-    def get_paragraph(key = nil)
-      @paragraphs.get_paragraph(key)
+    def paragraph(key = nil)
+      @paragraphs.paragraph(key)
     end
 
     def create_document()

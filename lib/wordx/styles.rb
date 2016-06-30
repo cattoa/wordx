@@ -25,7 +25,7 @@ module Wordx
       @@_styles_list.keys
     end
 
-    def get_style(style_name)
+    def style(style_name)
         return @@_styles_list[style_name]
     end
 

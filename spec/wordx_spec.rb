@@ -60,31 +60,31 @@ RSpec.describe '.Wordx' do
      expect(paragraph.text).to eq "Third rock from the sun"
    end
    it 'add text to paragraph para_001' do
-     paragraph = @document.get_paragraph(:para_001)
+     paragraph = @document.paragraph(:para_001)
      paragraph.text += ".Hope you have a great day!"
      expect(paragraph.text).to eq "Hello World glad to know you.Hope you have a great day!"
    end
 
    it 'the second paragraph is still empty' do
-     paragraph = @document.get_paragraph(:para_002)
+     paragraph = @document.paragraph(:para_002)
      expect(paragraph.text).to eq ""
    end
 
 
    it 'the default bold setting for the paragraph is false' do
-     paragraph = @document.get_paragraph(:para_001)
+     paragraph = @document.paragraph(:para_001)
      expect(paragraph.bold).to eq false
    end
 
 
    it 'set paragraph bold=true' do
-     paragraph = @document.get_paragraph(:para_001)
+     paragraph = @document.paragraph(:para_001)
      paragraph.bold = true
      expect(paragraph.bold).to eq true
    end
 
    it 'set paragraph to bold=false' do
-     paragraph = @document.get_paragraph(:para_001)
+     paragraph = @document.paragraph(:para_001)
      paragraph.bold = false
      expect(paragraph.bold).to eq false
    end
@@ -92,7 +92,7 @@ RSpec.describe '.Wordx' do
    it 'create a table in the document' do
      rows = 3
      columns = 3
-     paragraph = @document.get_paragraph(:para_001)
+     paragraph = @document.paragraph(:para_001)
      table = paragraph.new_table(rows,columns)
      expect(table.length).to eq 3
    end
@@ -101,7 +101,7 @@ RSpec.describe '.Wordx' do
    it 'add text to cell(0,0) and get text from cell(0,0)' do
      rows = 3
      columns = 3
-     paragraph = @document.get_paragraph(:para_001)
+     paragraph = @document.paragraph(:para_001)
      table = paragraph.new_table(rows,columns)
      cell = table.cell(0,0)
      cell.text = "Hello World"
@@ -111,7 +111,7 @@ RSpec.describe '.Wordx' do
    it 'add text to cell(0,0) and get text from cell(0,1)' do
      rows = 3
      columns = 3
-     paragraph = @document.get_paragraph(:para_001)
+     paragraph = @document.paragraph(:para_001)
      table = paragraph.new_table(rows,columns)
      cell = table.cell(0,0)
      cell.text = "Hello World"
@@ -120,7 +120,75 @@ RSpec.describe '.Wordx' do
 
    end
 
+   it 'add cell(0,0) and bold should be false' do
+     rows = 3
+     columns = 3
+     paragraph = @document.paragraph(:para_001)
+     table = paragraph.new_table(rows,columns)
+     cell = table.cell(0,0)
+     expect(cell.bold).to eql false
+   end
 
+
+   it 'add cell(0,0) and set bold to true' do
+     rows = 3
+     columns = 3
+     paragraph = @document.paragraph(:para_001)
+     table = paragraph.new_table(rows,columns)
+     cell = table.cell(0,0)
+     cell.bold = true
+     expect(cell.bold).to eql true
+   end
+
+   it 'add cell(0,0) and set bold to quack and check that it stays false' do
+     rows = 3
+     columns = 3
+     paragraph = @document.paragraph(:para_001)
+     table = paragraph.new_table(rows,columns)
+     cell = table.cell(0,0)
+     cell.bold = "quack"
+     expect(cell.bold).to eql false
+   end
+
+   it 'add cell(0,0) and set align to right' do
+     rows = 3
+     columns = 3
+     paragraph = @document.paragraph(:para_001)
+     table = paragraph.new_table(rows,columns)
+     cell = table.cell(0,0)
+     cell.align = "right"
+     expect(cell.align).to eql "right"
+   end
+
+   it 'add cell(0,0) and set align to center' do
+     rows = 3
+     columns = 3
+     paragraph = @document.paragraph(:para_001)
+     table = paragraph.new_table(rows,columns)
+     cell = table.cell(0,0)
+     cell.align = "center"
+     expect(cell.align).to eql "center"
+   end
+
+   it 'add cell(0,0) and set align to both' do
+     rows = 3
+     columns = 3
+     paragraph = @document.paragraph(:para_001)
+     table = paragraph.new_table(rows,columns)
+     cell = table.cell(0,0)
+     cell.align = "both"
+     expect(cell.align).to eql "both"
+   end
+
+   it 'add cell(0,0) and set align to quack and check that it stays left' do
+     rows = 3
+     columns = 3
+     paragraph = @document.paragraph(:para_001)
+     table = paragraph.new_table(rows,columns)
+     cell = table.cell(0,0)
+     cell.align = "quack"
+     expect(cell.align).to eql "left"
+   end
 
   #  it 'set create document' do
   #    @document.create_document()

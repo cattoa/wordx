@@ -237,7 +237,7 @@ module Wordx
           }
           doc_styles.list.each do |doc_style_name|
             unless doc_style_name==:DefaultText
-              doc_style = doc_styles.get_style(doc_style_name)
+              doc_style = doc_styles.style(doc_style_name)
               style_attr = {"w:type"=>doc_style.style,"w:styleId"=>doc_style.id}
               xml[:w].style(style_attr)  {
                 xml[:w].name "w:val"=>doc_style.name unless doc_style.name.nil?

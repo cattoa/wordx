@@ -20,7 +20,7 @@ module Wordx
         end
         @table.push(rows)
       end
-      @valid_alignments = ["left","right","center","both"]
+
     end
     def length
       return @table.length
@@ -46,14 +46,16 @@ module Wordx
       @text = ""
       @bold = false
       @align = "left"
+      @valid_alignments = ["left","right","center","both"]
+      @valid_boolean = [true,false]
     end
 
-    def align(align)
-      @align = "left" unless @valid_alignments.include?(align)
+    def align=(align)
+      @align = align if @valid_alignments.include?(align)
     end
 
-    def bold(bold)
-      @bold = bold if bold.in?([true,false])
+    def bold=(bold)
+      @bold = bold if @valid_boolean.include?(bold)
     end
 
   end
