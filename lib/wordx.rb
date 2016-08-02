@@ -12,6 +12,7 @@ module Wordx
     def initialize()
       @styles = Wordx::Styles.new()
       @paragraphs = Wordx::Paragraphs.new()
+      initialize_document()
     end
 
     def list_styles()
@@ -47,7 +48,7 @@ module Wordx
       @paragraphs.paragraph(key)
     end
 
-    def create_document()
+    def initialize_document()
       content_type = Wordx::ContentType.new()
       content_type.create()
       doc_props_app = Wordx::DocProp.new()
@@ -55,13 +56,16 @@ module Wordx
       doc_props_app.create_core()
       rels = Wordx::Rels.new()
       rels.create_rels()
-      word = Wordx::Word.new()
-      word.create_font_table()
-      word.create_rels()
-      word.create_settings()
-      word.create_styles()
-      word.create_numbering()
-      word.create_document(@paragraphs)
+      @word = Wordx::Word.new()
+      @word.create_font_table()
+      @word.create_rels()
+      @word.create_settings()
+      @word.create_styles()
+      @word.create_numbering()
+    end
+
+    def create_document()
+      @word.create_document(@paragraphs) unless @paragraphs.nil?
     end
   end
 end

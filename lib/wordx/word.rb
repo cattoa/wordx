@@ -170,7 +170,8 @@ module Wordx
         xml[:w].document(ns,"mc:Ignorable"=>"w14 wp14") {
           xml[:w].body {
             paragraphs.list.each do |para_key|
-              style = paragraphs.get_paragraph_style(para_key)
+              paragraph = paragraphs.paragraph(para_key)
+              style = paragraph.style
               xml[:w].p{
                 xml[:w].pPr {
                   xml[:w].pStyle("w:val"=>style.style) unless style.nil?
@@ -181,11 +182,11 @@ module Wordx
                 }
                 xml[:w].r{
                   xml[:w].rPr{
-                    xml[:w].b("w:val"=>paragraphs.get_paragraph_bold(para_key)) unless paragraphs.nil?
-                    xml[:w].bCs("w:val"=>paragraphs.get_paragraph_bold(para_key)) unless paragraphs.nil?
+                    xml[:w].b("w:val"=>paragraph.bold) unless paragraph.nil?
+                    xml[:w].bCs("w:val"=>paragraph.bold) unless paragraph.nil?
                   }
 
-                  xml[:w].t (paragraphs.get_paragraph_text(para_key)) unless paragraphs.nil?
+                  xml[:w].t (paragraph.text) unless paragraph.nil?
                 }
               }
             end

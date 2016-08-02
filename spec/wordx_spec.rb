@@ -190,8 +190,7 @@ RSpec.describe '.Wordx' do
      expect(cell.align).to eql "left"
    end
 
-  #  it 'set create document' do
-  #    @document.create_document()
-  #
-  #  end
+   it 'set create document' do
+     @document.create_document()
+   end
  end
