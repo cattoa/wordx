@@ -4,8 +4,9 @@ require "wordx/docProp"
 require "wordx/word"
 require "wordx/rels"
 require "wordx/paragraphs"
-
-
+require "rubygems"
+require 'zip'
+require 'tempfile'
 
 module Wordx
   class Document
@@ -66,6 +67,20 @@ module Wordx
 
     def create_document()
       @word.create_document(@paragraphs) unless @paragraphs.nil?
+
+      # Give the path of the temp file to the zip outputstream, it won't try to open it as an archive.
+      compressed_filestream = Zip::OutputStream.write_buffer do |zos|
+        zos.put_next_entry("docProps/app.xml")
+        path = File.dirname(__FILE__) + "/wordx/tempdoc/docProps/app.xml"
+        f= File.open(path,"r")
+        f.each_line do |line|
+          zos.write line
+        end
+        f.close
+      end
+      # End of the block  automatically closes the file.
+      # Send it using the right mime type, with a download window and some nice file name.
+      return compressed_filestream
     end
   end
 end

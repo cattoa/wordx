@@ -36,4 +36,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "listen","~> 3.0"
   spec.add_development_dependency "guard-rspec"
   spec.add_dependency "fileutils"
+  spec.add_dependency "rubyzip", "~> 1.2"
 end

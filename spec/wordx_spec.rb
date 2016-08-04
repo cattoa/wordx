@@ -191,6 +191,7 @@ RSpec.describe '.Wordx' do
    end
 
    it 'set create document' do
-     @document.create_document()
+     zipdoc = @document.create_document()
+     
    end
  end
