@@ -5,10 +5,10 @@ require 'yaml'
 module Wordx
   class Styles
     def initialize()
-      path = File.expand_path(File.dirname(__FILE__) + '/styles/')
+      path = File.expand_path(File.dirname(__FILE__) + "/styles/")
       Dir.open(path) do |dir|
         dir.each do |file|
-          register_style(path + '/' + file) if file.include?('.yaml')
+          register_style(path + "/" + file) if file.include?(".yaml")
         end
       end
     end

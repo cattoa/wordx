@@ -13,7 +13,6 @@ module Wordx
     def initialize()
       @styles = Wordx::Styles.new()
       @paragraphs = Wordx::Paragraphs.new()
-      initialize_document()
     end
 
     def list_styles()
@@ -50,33 +49,29 @@ module Wordx
     end
 
     def initialize_document()
-      content_type = Wordx::ContentType.new()
-      content_type.create()
-      doc_props_app = Wordx::DocProp.new()
-      doc_props_app.create_app()
-      doc_props_app.create_core()
-      rels = Wordx::Rels.new()
-      rels.create_rels()
-      @word = Wordx::Word.new()
-      @word.create_font_table()
-      @word.create_rels()
-      @word.create_settings()
-      @word.create_styles()
-      @word.create_numbering()
+
     end
 
     def create_document()
-      @word.create_document(@paragraphs) unless @paragraphs.nil?
-
       # Give the path of the temp file to the zip outputstream, it won't try to open it as an archive.
       compressed_filestream = Zip::OutputStream.write_buffer do |zos|
-        zos.put_next_entry("docProps/app.xml")
-        path = File.dirname(__FILE__) + "/wordx/tempdoc/docProps/app.xml"
-        f= File.open(path,"r")
-        f.each_line do |line|
-          zos.write line
-        end
-        f.close
+
+        content_type = Wordx::ContentType.new()
+        content_type.create(zos)
+        doc_props_app = Wordx::DocProp.new()
+        doc_props_app.create_app(zos)
+        doc_props_app.create_core(zos)
+        rels = Wordx::Rels.new()
+        rels.create_rels(zos)
+        @word = Wordx::Word.new()
+        @word.create_font_table(zos)
+        @word.create_rels(zos)
+        @word.create_settings(zos)
+        @word.create_styles(zos)
+        @word.create_numbering(zos)
+        @word.create_document(zos,@paragraphs) unless @paragraphs.nil?
+
+
       end
       # End of the block  automatically closes the file.
       # Send it using the right mime type, with a download window and some nice file name.

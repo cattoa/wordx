@@ -3,13 +3,11 @@ require 'nokogiri'
 
 module Wordx
   class Rels
-    def initialize(path = nil)
-      path_rels = File.dirname(__FILE__) + "/tempdoc/_rels/" if path.nil?
-      FileUtils::mkdir_p path_rels unless File.exists?(path_rels)
-      @rels_path = path_rels
+    def initialize()
+      @rels_path = "_rels/"
     end
 
-    def create_rels(rels = nil)
+    def create_rels(zos)
 
       ns = {
         "xmlns"=>"http://schemas.openxmlformats.org/package/2006/relationships",
@@ -22,10 +20,9 @@ module Wordx
         }
       end
       rels_path = @rels_path + ".rels"
-      File.delete(rels_path) if File.exists?(rels_path)
-      File.open(rels_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
-      end
+      zos.put_next_entry(rels_path)
+      zos.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
+
     end
   end
 end

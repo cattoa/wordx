@@ -1,13 +1,11 @@
 require 'fileutils'
 module Wordx
   class ContentType
-    def initialize(path = nil)
-      path = File.dirname(__FILE__) + "/tempdoc/" if path.nil?
-      FileUtils::mkdir_p path unless File.exists?(path)
-      @file_path = path + "[Content_Types].xml"
+    def initialize()
+      @file_path =  "[Content_Types].xml"
     end
 
-    def create
+    def create(zos)
       ns = {
         "xmlns"=>"http://schemas.openxmlformats.org/package/2006/content-types"
       }
@@ -25,10 +23,8 @@ module Wordx
         }
       end
 
-      File.delete(@file_path) if File.exists?(@file_path)
-      File.open(@file_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8"?>'))
-      end
+      zos.put_next_entry(@file_path)
+      zos.write (builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8"?>'))
     end
   end
 end

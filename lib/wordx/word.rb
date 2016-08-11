@@ -4,16 +4,13 @@ require "wordx/styles"
 
 module Wordx
   class Word
-    def initialize(path = nil)
-      path = File.dirname(__FILE__) + "/tempdoc/word/" if path.nil?
-      FileUtils::mkdir_p path unless File.exists?(path)
+    def initialize()
+      path = "word/"
       @word_path = path
-      path_rels = path + "/_rels/"
-      FileUtils::mkdir_p path_rels unless File.exists?(path_rels)
-      @word_rels_path = path_rels
+      @word_rels_path = path + "/_rels/"
     end
 
-    def create_font_table(fonts = nil)
+    def create_font_table(zos,fonts = nil)
 
       ns = {
         "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main",
@@ -45,13 +42,11 @@ module Wordx
         }
       end
       word_path = @word_path + "fontTable.xml"
-      File.delete(word_path) if File.exists?(word_path)
-      File.open(word_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
-      end
+      zos.put_next_entry(word_path)
+      zos.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
     end
 
-    def create_rels(fonts = nil)
+    def create_rels(zos,fonts = nil)
 
       ns = {
         "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main",
@@ -67,14 +62,12 @@ module Wordx
       end
 
       word_rels_path = @word_rels_path + "document.xml.rels"
-      File.delete(word_rels_path) if File.exists?(word_rels_path)
-      File.open(word_rels_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
-      end
+      zos.put_next_entry(word_rels_path)
+      zos.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
 
     end
 
-    def create_numbering(numbering_format = nil)
+    def create_numbering(zos,numbering_format = nil)
 
       if numbering_format.nil?
         numbering_format = [{:level=>"0",:start=>"1",:style=>"Heading1",:format=>"none",:suffix=>"nothing",:justify=>"left",:tab_type=>"num",:tab_spacing=>"432",:indent=>"432",:indent_hanging=>"432"}]
@@ -126,15 +119,13 @@ module Wordx
       end
 
       numbering_path = @word_path + "numbering.xml"
-      File.delete(numbering_path) if File.exists?(numbering_path)
-      File.open(numbering_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
-      end
+      zos.put_next_entry(numbering_path)
+      zos.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
 
     end
 
 
-    def create_settings(fonts = nil)
+    def create_settings(zos,fonts = nil)
 
       ns = {
         "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main"
@@ -150,14 +141,13 @@ module Wordx
       end
 
       word_path = @word_path + "settings.xml"
-      File.delete(word_path) if File.exists?(word_path)
-      File.open(word_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
-      end
+      zos.put_next_entry(word_path)
+      zos.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
+
 
     end
 
-    def create_document(paragraphs)
+    def create_document(zos,paragraphs)
 
       ns = {
         "xmlns:w"=>"http://schemas.openxmlformats.org/wordprocessingml/2006/main",
@@ -202,13 +192,11 @@ module Wordx
         }
       end
       doc_path = @word_path + "document.xml"
-      File.delete(doc_path) if File.exists?(doc_path)
-      File.open(doc_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
-      end
+      zos.put_next_entry(doc_path)
+      zos.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
     end
 
-    def create_styles()
+    def create_styles(zos)
 
       doc_styles = Wordx::Styles.new
 
@@ -282,10 +270,8 @@ module Wordx
       end
 
       doc_path = @word_path + "styles.xml"
-      File.delete(doc_path) if File.exists?(doc_path)
-      File.open(doc_path, "w+") do |fw|
-        fw.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
-      end
+      zos.put_next_entry(doc_path)
+      zos.write(builder.to_xml.sub!('<?xml version="1.0"?>','<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'))
     end
 
   end
