@@ -90,10 +90,10 @@ module Wordx
       builder = Nokogiri::XML::Builder.new do |xml|
         xml[:w].numbering(ns) {
           abs_num = {"w:abstractNumId"=>"1"}
-          xml[:w].abstractNum (abs_num) {
+          xml[:w].abstractNum(abs_num) {
             numbering_format.each do |num|
               num_lvl = {"w:ilvl"=>num[:level]} unless num[:level].nil?
-              xml[:w].lvl (num_lvl){
+              xml[:w].lvl(num_lvl){
                 xml[:w].start "w:val"=>num[:start] unless num[:start].nil?
                 xml[:w].pStyle "w:val"=>num[:style] unless num[:style].nil?
                 xml[:w].numFmt "w:val"=>num[:format] unless num[:format].nil?
@@ -112,7 +112,7 @@ module Wordx
             end
           }
           num_id = {"w:numId"=>"1" }
-          xml[:w].num (num_id){
+          xml[:w].num(num_id){
             xml[:w].abstractNumId "w:val"=>"1"
           }
         }
@@ -167,7 +167,7 @@ module Wordx
                   xml[:w].pStyle("w:val"=>style.style) unless style.nil?
                   spacing_detail = {"w:before"=>style.spacing_before,
                                     "w:after"=>style.spacing_after}
-                  xml[:w].spacing (spacing_detail)
+                  xml[:w].spacing(spacing_detail)
                   xml[:w].rPr
                 }
                 xml[:w].r{
@@ -175,10 +175,89 @@ module Wordx
                     xml[:w].b("w:val"=>paragraph.bold) unless paragraph.nil?
                     xml[:w].bCs("w:val"=>paragraph.bold) unless paragraph.nil?
                   }
-
-                  xml[:w].t (paragraph.text) unless paragraph.nil?
-                }
+                  xml[:w].t(paragraph.text) unless paragraph.nil?
               }
+              paragraph.list_tables do |table|
+                puts "table"
+                xml[:w].tbl{
+                  xml[:w].tblPr{
+                    xml[:w].tblW "w:w"=>"9638", "w:type"=>"dxa"
+                    xml[:w].tblW "w:w"=>"9638", "w:type"=>"dxa"
+                    xml[:w].jc("w:val"=>"left")
+                    xml[:w].tblInd("w:w"=>"55", "w:type"=>"dxa")
+                    xml[:w].tblBorders{
+                      xml[:w].top("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                      xml[:w].left("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                      xml[:w].bottom("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0",  "w:color"=>"000000")
+                      xml[:w].insideH("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                    }
+                    xml[:w].tblCellMar{
+                      xml[:w].top("w:w"=>"55" , "w:type"=>"dxa")
+                      xml[:w].left("w:w"=>"54" , "w:type"=>"dxa")
+                      xml[:w].bottom("w:w"=>"55" , "w:type"=>"dxa")
+                      xml[:w].right("w:w"=>"55" , "w:type"=>"dxa")
+                    }
+                  }
+                  xml[:w].tblGrid{
+                    xml[:w].gridCol("w:w"=>"2409")
+                    xml[:w].gridCol("w:w"=>"2410")
+                    xml[:w].gridCol("w:w"=>"2409")
+                    xml[:w].gridCol("w:w"=>"2410")
+                  }
+                  xml[:w].tr{
+                    xml[:w].trPr
+                    xml[:w].tc{
+                      xml[:w].tcPr{
+                        xml[:w].tcW("w:w"=>"2409", "w:type"=>"dxa")
+                        xml[:w].tcBorders{
+                          xml[:w].top("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                          xml[:w].left("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                          xml[:w].bottom("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                          xml[:w].insideH("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                        }
+                        xml[:w].shd("w:fill"=>"3465A4", "w:val"=>"clear")
+                        xml[:w].tcMar{
+                          xml[:w].left("w:w"=>"54", "w:type"=>"dxa")
+                        }
+                      }
+                      xml[:w].p{
+                        xml[:w].pPr{
+                          xml[:w].pStyle("w:val"=>"TableContents")
+                          xml[:w].rPr
+                        }
+                        xml[:w].r{
+                          xml[:w].rPr
+                        }
+                      }
+                    }
+                    xml[:w].tc{
+                      xml[:w].tcPr{
+                        xml[:w].tcW("w:w"=>"2410", "w:type"=>"dxa")
+                        xml[:w].tcBorders{
+                          xml[:w].top("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                          xml[:w].left("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                          xml[:w].bottom("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                          xml[:w].insideH("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                        }
+                        xml[:w].shd("w:fill"=>"3465A4", "w:val"=>"clear")
+                        xml[:w].tcMar{
+                          xml[:w].left("w:w"=>"54", "w:type"=>"dxa")
+                        }
+                      }
+                      xml[:w].p{
+                        xml[:w].pPr{
+                          xml[:w].pStyle("w:val"=>"TableContents")
+                          xml[:w].rPr
+                        }
+                        xml[:w].r{
+                          xml[:w].rPr
+                        }
+                      }
+                    }
+                  }
+                }
+              end
+            }
             end
             xml[:w].sectPr{
                 xml[:w].type "w:val"=>"nextPage"

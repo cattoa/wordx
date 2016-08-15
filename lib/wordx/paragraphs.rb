@@ -67,6 +67,13 @@ module Wordx
       return table
     end
 
+    def list_tables
+      @tables.keys
+    end
+
+    def table(key=nil)
+      table = get_table(key)
+    end
 
     private
 

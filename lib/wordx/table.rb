@@ -5,6 +5,7 @@ require "wordx/styles"
 
 module Wordx
   class Table
+    attr_accessor :row_count, :column_count
     def initialize(row_count=1,column_count=1)
       @row_count = row_count
       @column_count = column_count
@@ -25,6 +26,7 @@ module Wordx
     def length
       return @table.length
     end
+
 
     def cell(row,col)
       row = @table[row]

@@ -75,7 +75,8 @@ module Wordx
       end
       # End of the block  automatically closes the file.
       # Send it using the right mime type, with a download window and some nice file name.
-      return compressed_filestream
+
+      return compressed_filestream.string
     end
   end
 end
