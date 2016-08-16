@@ -198,63 +198,44 @@ module Wordx
                       xml[:w].right("w:w"=>"55" , "w:type"=>"dxa")
                     }
                   }
+                  gridwith = (9638/table.column_count).floor
                   xml[:w].tblGrid{
-                    xml[:w].gridCol("w:w"=>"2409")
-                    xml[:w].gridCol("w:w"=>"2410")
-                    xml[:w].gridCol("w:w"=>"2409")
-                    xml[:w].gridCol("w:w"=>"2410")
+                    (1..table.column_count).each do
+                      xml[:w].gridCol("w:w"=>gridwith)
+                    end
+
                   }
-                  xml[:w].tr{
-                    xml[:w].trPr
-                    xml[:w].tc{
-                      xml[:w].tcPr{
-                        xml[:w].tcW("w:w"=>"2409", "w:type"=>"dxa")
-                        xml[:w].tcBorders{
-                          xml[:w].top("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
-                          xml[:w].left("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
-                          xml[:w].bottom("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
-                          xml[:w].insideH("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                  (1..table.row_count).each do |row|
+                    xml[:w].tr{
+                      xml[:w].trPr
+                      (1..table.column_count).each do |column|
+                        xml[:w].tc{
+                          xml[:w].tcPr{
+                            xml[:w].tcW("w:w"=>gridwith, "w:type"=>"dxa")
+                            xml[:w].tcBorders{
+                              xml[:w].top("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                              xml[:w].left("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                              xml[:w].bottom("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                              xml[:w].insideH("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
+                            }
+                            xml[:w].shd("w:fill"=>"3465A4", "w:val"=>"clear")
+                            xml[:w].tcMar{
+                              xml[:w].left("w:w"=>"54", "w:type"=>"dxa")
+                            }
+                          }
+                          xml[:w].p{
+                            xml[:w].pPr{
+                              xml[:w].pStyle("w:val"=>"TableContents")
+                              xml[:w].rPr
+                            }
+                            xml[:w].r{
+                              xml[:w].rPr
+                            }
+                          }
                         }
-                        xml[:w].shd("w:fill"=>"3465A4", "w:val"=>"clear")
-                        xml[:w].tcMar{
-                          xml[:w].left("w:w"=>"54", "w:type"=>"dxa")
-                        }
-                      }
-                      xml[:w].p{
-                        xml[:w].pPr{
-                          xml[:w].pStyle("w:val"=>"TableContents")
-                          xml[:w].rPr
-                        }
-                        xml[:w].r{
-                          xml[:w].rPr
-                        }
-                      }
+                      end
                     }
-                    xml[:w].tc{
-                      xml[:w].tcPr{
-                        xml[:w].tcW("w:w"=>"2410", "w:type"=>"dxa")
-                        xml[:w].tcBorders{
-                          xml[:w].top("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
-                          xml[:w].left("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
-                          xml[:w].bottom("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
-                          xml[:w].insideH("w:val"=>"single", "w:sz"=>"2", "w:space"=>"0", "w:color"=>"000000")
-                        }
-                        xml[:w].shd("w:fill"=>"3465A4", "w:val"=>"clear")
-                        xml[:w].tcMar{
-                          xml[:w].left("w:w"=>"54", "w:type"=>"dxa")
-                        }
-                      }
-                      xml[:w].p{
-                        xml[:w].pPr{
-                          xml[:w].pStyle("w:val"=>"TableContents")
-                          xml[:w].rPr
-                        }
-                        xml[:w].r{
-                          xml[:w].rPr
-                        }
-                      }
-                    }
-                  }
+                  end
                 }
               end
             }
